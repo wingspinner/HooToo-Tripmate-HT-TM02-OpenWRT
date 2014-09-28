@@ -1,0 +1,60 @@
+Package: libjpeg
+Version: 9a-1
+Depends: libc
+Source: feeds/packages/libs/libjpeg
+License: IJG
+LicenseFiles: README
+Section: libs
+Maintainer: Jo-Philipp Wich <jow@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 99794
+Filename: libjpeg_9a-1_ramips_24kec.ipk
+Size: 100509
+MD5Sum: ff3ef48a848ba129620162d3000160f1
+SHA256sum: 20de06c14e734c283c925fb1f4ab90884681f7ac44409b60d5c638c916ebc1e1
+Description:  The Independent JPEG Group's JPEG runtime library
+
+Package: motion
+Version: 20110826-051001-2
+Depends: libc, libjpeg, libpthread
+Source: feeds/packages/multimedia/motion
+Section: multimedia
+Maintainer: Roger D <rogerdammit@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 90573
+Filename: motion_20110826-051001-2_ramips_24kec.ipk
+Size: 91309
+MD5Sum: d37e674237816a700be2328c792033bf
+SHA256sum: e19b1a96002d41117d6edb310a00cd0c0226fa4e63c6353843641bcf332e5080
+Description:  webcam motion sensing and logging
+
+Package: nano
+Version: 2.3.6-1
+Depends: libc, libncurses
+Source: feeds/packages/utils/nano
+Section: utils
+Maintainer: Jonathan Bennett <JBennett@incomsystems.biz>
+Architecture: ramips_24kec
+Installed-Size: 28182
+Filename: nano_2.3.6-1_ramips_24kec.ipk
+Size: 28916
+MD5Sum: e96fe0d462532efd1f06b0b52e453ac1
+SHA256sum: a8682d1b480b1e8ce3e29b53a57f65ffcc7a9c0218b5de4343a5face1501519d
+Description:  GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enhanced clone
+ of the Pico text editor.
+
+Package: vsftpd
+Version: 3.0.2-4
+Depends: libc
+Source: feeds/packages/net/vsftpd
+License: GPLv2
+Section: net
+Maintainer: Cezary Jackiewicz <cezary@eko.one.pl>
+Architecture: ramips_24kec
+Installed-Size: 41868
+Filename: vsftpd_3.0.2-4_ramips_24kec.ipk
+Size: 42632
+MD5Sum: 26b1a642d6351662036598dd393c8792
+SHA256sum: 4deba693bcb223041d8dd1e5563ad65080a83ab7cbe3a235c2379953d0f26983
+Description:  A fast and secure FTP server (no TLS)
+
