@@ -26,15 +26,14 @@ REQUIREMENTS
 
 INSTRUCTIONS
 
-To install OpenWRT on the TM02 we replaced the UBoot bootloader with one more
+To install OpenWRT on the TM02 we need to replace the factory UBoot bootloader with one more
 compatible with the OpenWRT partitioning scheme. The hard way to do this is to
 solder a 3v USB<->Serial cable to the board, setup a tftp server and replace it
 using tftp, then reboot and us that to  burn the OpenWRT sysupgrade image to the
 correct MTD partition using tftp. That's how I did it the first time.
 
-Since then, I have studied and now understand the factory HooToo upgrade images
-and have used that knowledge to create an OpenWRT image that's compatible with
-the HooToo factory GUI software. In OpenWRT parlance this the "factory"
+Since then, I created an OpenWRT image that's compatible with
+the HooToo factory GUI software. In OpenWRT parlance this is called the "factory"
 image. Now it's easy to do the conversion/upgrade and it shouldn't take more
 than 10-15 minutes. Here's the process....
 
@@ -112,6 +111,6 @@ http://creativecommons.org/licenses/by-sa/3.0/ . OpenWRT sources and binarys are
 subject to the licensing requirements of OpenWRT.org. Some files may fall under
 other types of licenses. 
 
-No proprietary source code, binary files, or other intellectual property is
-included to the best of our knowledge.
+No proprietary source code, binary files, or other proprietary intellectual property is
+included on this site to the best of our knowledge.
 Please notify us if you find otherwise and we will take appropriate action. 
