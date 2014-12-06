@@ -79,7 +79,7 @@ interface as well. I'm using a TM02 freshly upgraded as a client bridge with
 relayd as I write this.
 
 
-WHAT HAPPENS DURING THEY UPGRADE AND WHY YOU NEED A USB FLASH STICK
+WHAT HAPPENS DURING THE UPGRADE AND WHY YOU NEED A USB FLASH STICK
 
 The TM02 with the factory software doesn't have enough RAM to untar/ungzip and
 assemble the complete TM02 flash MTD image for the upgrade so it requires a USB
@@ -104,7 +104,7 @@ command. (Note:This doesn't appear to happen. Probably because the MTD has been
 completely overwritten as well as various services have been shutdown and
 removed from RAM.)
 
-
+Ron Curry (Wingspinner)
 
 LEGAL
 The files on this site and these instructions are licensed under a  Creative
