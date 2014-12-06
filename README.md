@@ -65,8 +65,10 @@ up. That's the new UBoot. When it starts to boot the kernel they will go out.
 After about 30 seconds it should be booted into OpenWRT. Later, you can configure 
 the LED's to do something more useful.
 
-7. LUCI should be up and running so browse to 192.168.1.1 and configure to your
-hearts content. 
+7. LUCI should be up and running so browse to 192.168.1.1 and configure as needed.
+This install is intended as only an initial install to get openwrt on your device 
+so the first thing you should do is upgrade using the latest trunk "upgrade"
+binary from openwrt.org.
 
 INITIAL CONFIGURATION
 
