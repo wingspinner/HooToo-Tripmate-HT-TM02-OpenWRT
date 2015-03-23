@@ -22,8 +22,8 @@ REQUIREMENTS
 
 INSTRUCTIONS
 
-Note: There are additional instructions and discussion on the openwrt.org forum in this thread: 
-https://forum.openwrt.org/viewtopic.php?id=53014
+Note: There are much more detailed instructions and answers to questions on the openwrt.org forum in this thread: 
+https://forum.openwrt.org/viewtopic.php?id=53014 . I update that regularly and suggest using the instructions there rather than these.
 
 To install OpenWRT on the TM02 we need to replace the factory UBoot bootloader with one more compatible with the OpenWRT partitioning scheme. The hard way to do this is to solder a 3v USB<->Serial cable to the board, setup a tftp server and replace it using tftp, then reboot and us that to  burn the OpenWRT sysupgrade image to the correct MTD partition using tftp. That's how I did it the first time.
 
