@@ -1,0 +1,112 @@
+Package: luci-app-firewall
+Version: svn-r10532-1
+Depends: libc, firewall
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: ramips_24kec
+Installed-Size: 64415
+Filename: luci-app-firewall_svn-r10532-1_ramips_24kec.ipk
+Size: 65234
+MD5Sum: c9c470a1a07d7e28dd5995e9dff89f2d
+SHA256sum: 1f8124ddc469a71c35243c4534a1a547c6c2b1bcf6e1f2b4c9afe0ad3de70ace
+Description:  Firewall and Portforwarding application
+
+Package: luci-base
+Version: svn-r10532-1
+Depends: libc, lua, libuci-lua, libubus-lua
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: ramips_24kec
+Installed-Size: 141319
+Filename: luci-base_svn-r10532-1_ramips_24kec.ipk
+Size: 142246
+MD5Sum: 210dcfbca2fcbc3e9bf796eee6ea6688
+SHA256sum: cdaee951cb9a9123631c88747ea88cf7f2eb1c26f28f5873da54344949cc7e83
+Description:  LuCI core libraries
+
+Package: luci-lib-nixio
+Version: svn-r10532-1
+Depends: libc, luci-base
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: ramips_24kec
+Installed-Size: 29307
+Filename: luci-lib-nixio_svn-r10532-1_ramips_24kec.ipk
+Size: 29942
+MD5Sum: 2eb09638e1cc59d04356ebc1eb857451
+SHA256sum: 4992ec26dfd8adcd7cba63d24d798f7f52674e1a6f74eb807fa2b9387e358153
+Description:  NIXIO POSIX library
+
+Package: luci-mod-admin-full
+Version: svn-r10532-1
+Depends: libc, luci-base
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: ramips_24kec
+Installed-Size: 67049
+Filename: luci-mod-admin-full_svn-r10532-1_ramips_24kec.ipk
+Size: 67863
+MD5Sum: 375ed242de8436420feb7c37029b8a0b
+SHA256sum: 5282034b380ce98d86d66e2a0befa81bea72d55aa4621688ad3ecb3b9548706c
+Description:  LuCI Administration - full-featured for full control
+
+Package: luci-proto-ppp
+Version: svn-r10532-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: ramips_24kec
+Installed-Size: 3001
+Filename: luci-proto-ppp_svn-r10532-1_ramips_24kec.ipk
+Size: 3713
+MD5Sum: 891983464c6a7e52aa35619139f2f675
+SHA256sum: 5c2d59187bacfc285b36cf884bd8d22c61555664148a8ff1e7ceedd9c210a788
+Description:  Support for PPP/PPPoE/PPPoA/PPtP
+
+Package: luci-proto-relay
+Version: svn-r10532-1
+Depends: libc, relayd
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: ramips_24kec
+Installed-Size: 2202
+Filename: luci-proto-relay_svn-r10532-1_ramips_24kec.ipk
+Size: 2936
+MD5Sum: 9873e1142aabb235f230b043f22e48fd
+SHA256sum: e37d61b4fa225ae2f461e27963f99fd57594c52ac17407045c9abb8392458d7b
+Description:  Support for relayd pseudo bridges
+
+Package: luci-theme-bootstrap
+Version: svn-r10532-1
+Depends: libc
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: ramips_24kec
+Installed-Size: 12797
+Filename: luci-theme-bootstrap_svn-r10532-1_ramips_24kec.ipk
+Size: 13514
+MD5Sum: ef988773ff9ae2ec80d33935ae78fc98
+SHA256sum: 008ed876282ea6f66602718af2390ed879dcd3b53fa93fff2122accb4dde0775
+Description:  Bootstrap Theme (default)
+
+Package: luci
+Version: svn-r10532-1
+Depends: libc, uhttpd, uhttpd-mod-ubus, luci-mod-admin-full, luci-theme-bootstrap, luci-app-firewall, luci-proto-ppp, libiwinfo-lua, luci-lib-nixio
+Source: feeds/luci/contrib/package/luci
+Section: luci
+Maintainer: LuCI Development Team <luci@lists.subsignal.org>
+Architecture: ramips_24kec
+Installed-Size: 106
+Filename: luci_svn-r10532-1_ramips_24kec.ipk
+Size: 926
+MD5Sum: 4d9ac051bc2d05fb56ca9c305782ed9d
+SHA256sum: 67ece4343e548873f42b16a553efd2443cb7ac5450d6a8eac5698a27399451da
+Description:  Standard OpenWrt set including full admin with ppp support and the default OpenWrt theme
+

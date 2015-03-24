@@ -1,0 +1,311 @@
+#!/bin/sh
+#nmkhtimage.sh
+
+# Copyright Ron Curry, InSyte Technologies 2015 rec@curry.org
+# This software is licensed under the
+# Creative Commons Attribution-ShareAlike 3.0 Unported License 
+# http://creativecommons.org/licenses/by-sa/3.0/ 
+#
+# You are free to:
+#    Share — copy and redistribute the material in any medium or format
+#    Adapt — remix, transform, and build upon the material
+#    for any purpose, even commercially.
+#
+# Under the following terms:
+#    Attribution — You must give appropriate credit, provide a link to the 
+#    license, and indicate if changes were made. You may do so in any 
+#    reasonable manner, but not in any way that suggests the licensor 
+#    endorses you or your use.
+#
+#    ShareAlike — If you remix, transform, or build upon the material,
+#    you must distribute your contributions under the same license as the original.
+#
+#    No additional restrictions — You may not apply legal terms or 
+#    technological measures that legally restrict others from doing 
+#    anything the license permits.
+
+# Constants
+
+UBOOT_INPUT=$1
+FIRMWARE_INPUT=$2
+REVISION=$3
+
+TMPDIR="htimagetmp"
+
+LOADER_FILE="htloader.tmp"
+UBOOT_FILE="uboot.bin"
+FIRMWARE_FILE="firmware.bin"
+PAYLOAD_FILE="firmware"
+OUTPUT_FILE="openwrt-ramips-rt305x-ht-tm02-squashfs-factory"
+
+SKIP=147
+
+
+# ============= Functions ============
+
+cleanup() {
+      rm -rf $TMPDIR
+      return 0
+}
+
+
+#=============== Main =================
+
+
+# Make sure we have all the correct arguments and then execute or print usage
+if [ -n "$1" ]; then
+  if [ -n "$2" ]; then
+    if [ -n "$3" ]; then
+
+		# Clean up any mess from any previously aborted attempts
+		cleanup
+
+		# Create a temporary working directory
+		mkdir $TMPDIR >/dev/null 2>&1
+		if [ $? -ne 0 ]; then
+			echo "ERROR - Cannot create temporary workspace. Aborting..."
+			cleanup
+			exit 1
+		fi
+
+		# Copy the input files to temporaries with standardized names
+		cp $UBOOT_INPUT "$TMPDIR/$UBOOT_FILE" >/dev/null 2>&1
+		if [ $? -ne 0 ]; then
+			echo "ERROR - Cannot create temporary uboot file. Aborting..."
+			cleanup
+			exit 1
+		fi
+
+		cp $FIRMWARE_INPUT "$TMPDIR/$FIRMWARE_FILE" >/dev/null 2>&1
+		if [ $? -ne 0 ]; then
+			echo "ERROR - Cannot create temporary sysupgrade file. Aborting..."
+			cleanup
+  		exit 1
+		fi
+
+		echo "\nCreating Payload ..."
+		cd $TMPDIR
+		tar -czf "$PAYLOAD_FILE.tar.gz" "$UBOOT_FILE" "$FIRMWARE_FILE"
+#		gzip "$TMPDIR/$PAYLOAD_FILE.tar"
+		cd ..
+		if [ $? -ne 0 ]; then
+  			echo "ERROR - Cannot create payload. Aborting..."
+  			cleanup
+  			exit 1
+		fi
+
+		echo "Creating HooToo loader ..."
+    	#Split out the loader
+    	tail -n +$SKIP $0 > "$TMPDIR/$LOADER_FILE"
+    	if [ $? -ne 0 ]; then
+			echo "ERROR - Could not create loader. Check that tail is present and in your path"
+			cleanuup
+			exit 1
+		fi
+
+		echo "Assembling HooToo upgrade binary ..."
+    	cat "$TMPDIR/$LOADER_FILE" "$TMPDIR/$PAYLOAD_FILE.tar.gz" > "$TMPDIR/$OUTPUT_FILE.tmp"
+		if [ $? -ne 0 ]; then
+			echo "ERROR - Cannot create HooToo upgrade file. Aborting..."
+			cleanup
+			exit 1
+		fi
+
+    	CRCSUM=`sed '1,3d' "$TMPDIR/$OUTPUT_FILE.tmp" | cksum |sed -e 's/ /Z/' -e 's/   /Z/' | cut -dZ -f1`
+    	if [ $? -ne 0 ]; then
+			echo "ERROR - Could not calculate crcsum. Check that cksum and sed are present and in your path"
+			cleanuup
+			exit 1
+    	fi
+
+    	echo "Writing CRCSUM  ..."
+    	sed 's:^CRCSUM=[0-9]*:CRCSUM='$CRCSUM':' "$TMPDIR/$OUTPUT_FILE.tmp" > "$OUTPUT_FILE-$REVISION.bin"
+    	if [ $? -ne 0 ]; then
+			echo "ERROR - Could not write crcsum. sed had an error while writing final image file"
+			cleanuup
+			exit 1
+    	fi
+
+    	echo "Cleaning up ..."
+    	cleanup
+
+    	echo "Success - Created OpenWRT Factory Sysupgrade: "$OUTPUT_FILE-$REVISION.bin"\n\n"
+
+    	exit 0
+    fi
+  fi
+fi
+
+cleanup
+echo "\nUsage: $0 uboot_binary openwrt_sysupgrade_binary revision\n\n"
+exit 1
+END_OF_MKHTIMAGE
+#=============== Loader Code ========================
+# Loader code starts at the "shebang" line
+# ---- Modifications WILL break things ----
+: <<"END_OF_STUB"
+#!/bin/sh
+# constants
+CRCSUM=3192244707
+OEM=POWER7
+VERSION=r42649
+VENDOR=HooToo
+PRODUCTLINE=WiFiPort
+SKIP=166
+TARGET_OS="linux"
+TARGET_ARCH="arm"
+DEVICE_TYPE=TM02
+CPU=5350
+
+FWPT="/data/UsbDisk1/Volume1/.vst"
+HTUSB="/data/UsbDisk1/Volume1"
+USBDIR="HT-Flash"
+#HTUSB="/Volumes/SanDisk8g"
+
+SRVLIST="mlnet.sh ftp.sh nfs.sh smb.sh xl.sh ushare.sh mt-daapd.sh ddns.sh serverdev.sh fileserv.sh upnpc.sh ntp.sh web upnpd.sh upnpc.sh nasclient.sh"
+SPELIST="vst_daemon etc_tools web ioos"
+
+
+
+TMPDIR="tmp"
+#TMPDIR="tmp"
+
+MTDPRE="/dev"
+#MTDPRE="/Users/recurry/HooToo_Firmware/test_dir/mtd"
+ALLMTD="$MTDPRE/mtd0"
+BOOTMTD="$MTDPRE/mtd1"
+CONFMTD="$MTDPRE/mtd2"
+FACTMTD="$MTDPRE/mtd3"
+KERNMTD="$MTDPRE/mtd4"
+PARAMTD="$MTDPRE/mtd5"
+UBKUPMTD="$MTDPRE/mtd6"
+USERMTD="$MTDPRE/mtd7"
+ROOTFSMTD="$MTDPRE/mtd7"
+
+OBOOTFILE="Bootloader.bin"
+UBOOTFILE="uboot.bin"
+CONFFILE="Config.bin"
+FACTFILE="Factory.bin"
+KERNFILE="Kernel_RootFS.bin"
+PARAFILE="params.bin"
+UBKUPFILE="user_backup.bin"
+USERFILE="user.bin"
+ROOTFILE="Rootfs.bin"
+FIRMFILE="firmware.bin"
+FIRMGZ="firmware.tar.gz"
+FIRMTAR="firmware.tar"
+ALLFILE="ALL.bin"
+NEWFILE="openwrt.bin"
+
+# =========== Functions ============
+
+
+# Copy the MTD partitions to the flash drive
+makecopy() {
+	cp $BOOTMTD "$HTUSB/$USBDIR/$OBOOTFILE"
+	cp $CONFMTD "$HTUSB/$USBDIR/$CONFFILE"
+	cp $FACTMTD "$HTUSB/$USBDIR/$FACTFILE"
+	cp $KERNMTD "$HTUSB/$USBDIR/$KERNFILE"
+	cp $PARAMTD "$HTUSB/$USBDIR/$PARAFILE"
+	cp $UBKUPMTD "$HTUSB/$USBDIR/$UBKUPFILE"
+	cp $USERMTD "$HTUSB/$USBDIR/$USERFILE"
+	cp $ROOTFSMTD "$HTUSB/$USBDIR/$ROOTFILE"
+	cp $ALLMTD "$HTUSB/$USBDIR/$ALLFILE"	
+	sync
+	sync
+}
+
+# Make a backup copy of the factory firmware if USB flash stick present
+makeusbcopy() {
+	if [ -e $HTUSB ]; then
+		if [ -e "$HTUSB/$USBDIR" ]; then
+			rm -rf "$HTUSB/$USBDIR"
+			mkdir "$HTUSB/$USBDIR"
+			makecopy
+		else
+			mkdir "$HTUSB/$USBDIR"
+			makecopy
+		fi
+	fi
+}
+
+# ========= Main ==========
+
+# ====== Close services so we free up RAM and don't have interference
+
+# wait web
+sleep 5
+echo "close services, waiting ..."
+for ser in $SRVLIST
+do
+        if [ -e /etc/init.d/$ser ]; then
+                /etc/init.d/$ser stop > /dev/null 2>&1
+        fi
+done
+
+# close spe service
+for spefile in $SPELIST
+do
+        rm -f /var/run/$spefile*  > /dev/null 2>&1
+done
+spepid=`pidof $SPELIST`
+for pid in $spepid
+do
+        kill -9 $pid > /dev/null 2>&1
+done
+echo "services closed"
+
+# ===== Backup the factory firmware
+makeusbcopy
+
+# ===== untar new uboot and openwrt upgrade file
+echo "unzip firmware package"
+
+#Split out the firmware payload
+/usr/bin/tail -n +$SKIP $0 > "$HTUSB/$USBDIR/$FIRMGZ"
+if [ $? -ne 0 ]; then
+        exit 1
+fi
+
+cd "$HTUSB/$USBDIR"
+/bin/gunzip $FIRMGZ
+/bin/tar -xf $FIRMTAR
+
+# ====== Make sure firmware and uboot file exists and program them if they do
+if [ -f "$FIRMFILE" ];then
+    if [ -f "$UBOOTFILE" ];then
+
+		# No need for tar file now
+		rm -f $FIRMTAR
+
+		# Make the new "ALL" image file and program it
+		cat $UBOOTFILE $CONFMTD $FACTMTD $FIRMFILE > "$NEWFILE"
+		
+		if [ -f $NEWFILE ]; then
+			# Delete some stuff so we don't run out of room
+			rm -f $UBOOTFILE
+			rm -f $FIRMFILE
+						
+			#Now program the flash
+			/bin/mtd_write write $NEWFILE $ALLMTD
+
+		else
+			echo "Image was not made - aborting..."
+			exit 1
+		fi
+	
+	else
+        exit 1
+	fi
+else
+	exit 1
+
+fi
+
+# ====== Successs!
+sync
+sync
+reboot
+
+exit 0
+END_OF_STUB
