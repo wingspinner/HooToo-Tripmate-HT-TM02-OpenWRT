@@ -42,7 +42,7 @@ Since then, I created an OpenWRT image that's compatible with the HooToo factory
 
 6. Connect an ethernet cable between your PC and the TM02. Set your PC for DHCP and then power-on the TM02. If the upgrade worked, you'll see both LED's light up. That's the new UBoot. When it starts to boot the kernel they will go out. After about 30 seconds it should be booted into OpenWRT. Later, you can configure the LED's to do something more useful.
 
-7. LUCI should be up and running so browse to 192.168.1.1 and configure as needed. This install uses the Chaos Calmer snapshot r42649 and works fine for everything I've been doing. However, if you wish to upgrade to the latest trunk development revision you can obtain an "upgrade" binary from openwrt.org here: http://downloads.openwrt.org/snapshots/trunk/ramips/openwrt-ramips-rt305x-ht-tm02-squashfs-sysupgrade.bin . Be aware that the trunk snapshots are bleeding edge and may contain random bugs so, unless you have some specific reason to move to a later snapshot you may avoid problems by sticking with r42649 for now.
+7. LUCI should be up and running so browse to 192.168.1.1 and configure as needed. This install uses the Chaos Calmer snapshot r42649 and works fine for everything I've been doing. However, if you wish to upgrade to the latest trunk development revision you can obtain an "upgrade" binary from openwrt.org here: http://downloads.openwrt.org/snapshots/trunk/ramips/generic/openwrt-ramips-rt305x-ht-tm02-squashfs-sysupgrade.bin . Be aware that the trunk snapshots are bleeding edge and may contain random bugs so, unless you have some specific reason to move to a later snapshot you may avoid problems by sticking with r42649 for now.
 
 INITIAL CONFIGURATION
 
